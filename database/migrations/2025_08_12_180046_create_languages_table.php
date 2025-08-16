@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('languages', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Language name (e.g., "English", "Spanish")
+            $table->string('code', 5); // Language code (e.g., "en", "es")
+            $table->string('flag')->nullable(); // Flag image path
+            $table->boolean('is_active')->default(true); // Whether language is active
+            $table->boolean('is_default')->default(false); // Whether it's the default language
+            $table->integer('sort_order')->default(0); // For ordering languages
+            $table->timestamps();
+            
+            $table->unique('code');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('languages');
+    }
+};
